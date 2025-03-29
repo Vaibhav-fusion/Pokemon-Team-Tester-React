@@ -219,7 +219,7 @@ function AllTypesCount(typeStorArr){
 }
 
 
-function PokeCards({ pokemonData }) {
+function PokeCards({ pokemonData , showShiny  }) {
 
   
   const [typeStorage , setTypeStorage] = useState(["", "", "", "", "", ""])
@@ -252,7 +252,12 @@ function PokeCards({ pokemonData }) {
     <div>
       {pokemonData.map((poke) => (
         <div key={poke.id}>
-          <img src={poke.sprites.front_default} alt={poke.name} />
+            
+            <img 
+            src={showShiny ? poke.sprites.front_shiny : poke.sprites.front_default} 
+            alt={poke.name} 
+          />
+
           <p>{capitalizeFirstLetter(poke.name)}</p>
           <p>Type: {poke.types.map(typeInfo => capitalizeFirstLetter( typeInfo.type.name)).join(', ')}</p>
 

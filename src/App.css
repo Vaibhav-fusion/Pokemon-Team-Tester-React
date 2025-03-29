@@ -20,10 +20,22 @@
     font-family: "coolB";
     src: url('assets/coolvetica/CoolveticaComp.otf') format("opentype");
 }
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url('https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2') format('woff2'),
+         url('https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nVivU.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Ensures text remains visible during load */
+  }
 
 body{
     font-family: "cool",sans-serif;
-    margin: ;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+    
+    
+
 }
 
 input::placeholder {
@@ -31,6 +43,7 @@ input::placeholder {
   font-size: 14px; 
 }
 
+/* input css thingy */
 input {
   font-family: 'cool', sans-serif; 
 }
@@ -46,13 +59,133 @@ input {
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Hover effect */
+
 input:hover {
     border-color: #888;
 }
 
-/* Focus effect */
+
 input:focus {
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
 }
+
+/* button css thingy */
+button {
+  font-family: 'cool', cursive;
+  font-size: 12px;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffcb05; /* Pokémon yellow */
+  color: #2a75bb; /* Pokémon blue */
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 
+    0 3px 0 #c7a008,
+    0 4px 4px rgba(0,0,0,0.2);
+  transition: all 0.1s;
+}
+
+button:hover {
+  background-color: #ffde59;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 5px 0 #c7a008,
+    0 6px 6px rgba(0,0,0,0.2);
+}
+
+button:active {
+  transform: translateY(2px);
+  box-shadow: 
+    0 1px 0 #c7a008,
+    0 2px 2px rgba(0,0,0,0.2);
+}
+
+/* Shiny toggle special style */
+button:nth-last-child(1) {
+  background-color: #ff3e3e;
+  color: white;
+  box-shadow: 
+    0 3px 0 #cc0000,
+    0 4px 4px rgba(0,0,0,0.2);
+}
+
+button:nth-last-child(1):hover {
+  background-color: #ff6b6b;
+}
+
+.main-container{
+    padding: 25px;
+    background: linear-gradient(-45deg, #ffacac, #99d5f4);
+  background-size: 200% 200%;
+  animation: gradientBG 8s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+/* heading */
+.heading-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+    background: linear-gradient(135deg, #3aa0ff 0%, #6c3ca6 100%);
+    border-bottom: 4px solid #c9a100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    border-radius: 20px;
+  }
+  .heading-top h1{
+    font-family: "coolB",sans-serif;
+    font-size: 60px;
+    text-shadow: 
+    1px 1px 2 #2382ff,
+    -1px -1px 0 #3c5aa6,
+    1px -1px 0 #3c5aa6,
+    -1px 1px 0 #3c5aa6,
+    1px 1px 0 #3c5aa6;
+  letter-spacing: 2px;
+  margin: 0;
+
+  }
+
+  .heading-top img {
+    filter: drop-shadow(0 0 5px rgba(84, 5, 255, 0.7));
+    transition: transform 0.3s ease;
+  }
+  
+  .heading-top img:hover {
+    transform: scale(1.1) rotate(10deg);
+  }
+
+  .input-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 15px;
+    max-width: 100%;
+    margin: 0 auto 20px;
+    padding: 20px;
+    border-radius: 10px;
+
+  }
+  
+  .button-container{
+    display: flex;
+    justify-content: space-around;
+    /* gap: 80px; */
+  }
+
+  

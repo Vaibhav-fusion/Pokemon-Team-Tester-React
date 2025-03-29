@@ -6,6 +6,8 @@ import PokeCards from './PokeCards/PokeCards';
 function App() {
   const [pokemonNames, setPokemonNames] = useState(["", "", "", "", "", ""]);
   const [pokemonData, setPokemonData] = useState([]);
+  const [showShiny, setShowShiny] = useState(false);
+
 
   const fetchPokemon = async () => {
 
@@ -39,10 +41,14 @@ function App() {
 
  
   return (
-    <>
-      <h1>Pokemon Team Tester</h1>
+    <div className='main-container'>
+      
+      <div className='heading-top'>
+      <h1 >Pokemon Team Tester</h1>
+      <img src='../src/assets/1.png' style={{height:"50px"}} />
+      </div>
 
-      <div>
+      <div className='input-container'>
         {pokemonNames.map((name, index) => (
           <input
             key={index}
@@ -59,13 +65,16 @@ function App() {
         ))}
       </div>
 
-      <div>
+      <div className='button-container'>
         <button onClick={fetchPokemon}>Fetch Pokemon</button>
         <button onClick={getRandomPokemon}>Random Pokemon</button>
+        <button onClick={() => setShowShiny(!showShiny)} >
+          {showShiny ? 'Normal Sprites' : 'Shiny Sprites'}
+        </button>
       </div>
 
-     <PokeCards pokemonData={pokemonData}  />
-    </>
+     <PokeCards pokemonData={pokemonData}  showShiny={showShiny} />
+    </div>
   );
 }
 
