@@ -4,6 +4,24 @@ import { useEffect, useState } from 'react'
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
+function capCUT(obj){
+  let tempoArray = Object.entries(obj)
+
+  let res=""
+  
+  tempoArray.forEach((e,ind)=>{
+
+    if (ind==tempoArray.length-1){
+      res+= e[0]+" x"+e[1]+" "
+    }
+    else{
+      res+= e[0]+" x"+e[1]+", "
+    }
+    
+  })
+
+  return res
+}
 ///type chart matrix
 const typeEffectiveness = {
     Normal:    { ...allTypes(1), Fighting: 2, Ghost: 0 },
@@ -96,8 +114,15 @@ function TypeEffectivnessCard(typeArray){
 
 
 function AllTypesCount(typeStorArr){
+
+  let Perfect_team=false;
+
   let typeCount = allTypes(0);
   
+  let immunities={}
+
+  let fourXtimeweak={}
+
   typeStorArr.forEach((eachPoke) => {
     // Skip if not an array
     if (!Array.isArray(eachPoke)) return;
@@ -111,19 +136,85 @@ function AllTypesCount(typeStorArr){
         else if (e[1] < 1) {
           typeCount[e[0]] = (typeCount[e[0]] || 0) - 1;
         }
+        //
+        if (e[1]==0){
+
+          immunities[e[0]]=(immunities[e[0]] || 0)+ 1
+        }
+        if (e[1]==4){
+          if(fourXtimeweak[e[0]]){
+            fourXtimeweak[e[0]] += 1
+          }
+          else{
+            fourXtimeweak[e[0]] = 1
+          }
+          
+        }
       }
     });
   });
+
+  
+  let weakTO=[]
+  let ressistTO=[]
+
+  Object.entries(typeCount).forEach((ele)=>{
+    if (ele[1]>=3){
+      weakTO=[...weakTO,ele[0]]
+    }
+
+    if (ele[1]<=-3){
+      ressistTO=[...ressistTO,ele[0]]
+    }
+    
+    
+  })
+  //for fout typ check weaknes counter thingy
+  Object.entries(fourXtimeweak).forEach((e)=>{
+    if(typeCount[e[0]]<0){
+      delete fourXtimeweak[e[0]]
+    }
+  })
+
+
+
+  console.log(immunities,weakTO)
+  console.log(ressistTO)
+  console.log("4",fourXtimeweak)
+
+  //
+  if (weakTO.length==0 &&  ressistTO.length==0 && Object.keys(immunities).length==0 && Object.keys(fourXtimeweak).length==0){
+    Perfect_team = true
+  }
+  
   return <>
     {
       Object.entries(typeCount).map((ele,index)=>(
-        <div key={index}>
+        <div >
           <h2>{ele[0]}</h2>
           <p>{ele[1]}</p>
 
         </div>
       ))
     }
+    <div>
+    {
+      weakTO.length==0?<></>:<p>{"You Team has weakness to "+weakTO.join(",")}</p>
+    }
+    {
+      ressistTO.length==0?<></>:<p>{"You Team is very resistive againts "+ressistTO.join(",")}</p>
+    }
+    {
+      Object.keys(immunities).length==0?<></>:<p>{"You Team has immunities to "+capCUT(immunities)}</p>
+    }
+    {
+      Object.keys(fourXtimeweak).length==0?<></>:<p>{"You team is 4X weak to "+capCUT(fourXtimeweak)}</p>
+    }
+    {
+      Perfect_team==true?<p>{"Damn you have got some nice team ! 🤩"}</p> :<></>
+    }
+    </div>
+    
   </>
 }
 

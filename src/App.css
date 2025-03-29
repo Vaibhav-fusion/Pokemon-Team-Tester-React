@@ -1,0 +1,58 @@
+
+@font-face {
+    font-family: "cool";
+    src: url('assets/coolvetica/coolvetica.otf') format("opentype");
+}
+@font-face {
+    font-family: "coolI";
+    src: url('assets/coolvetica/Coolvetica_italic.otf') format("opentype");
+}
+
+@font-face {
+    font-family: "coolC";
+    src: url('assets/coolvetica/CoolveticaCram.otf') format("opentype");
+}
+@font-face {
+    font-family: "coolL";
+    src: url('assets/coolvetica/CoolveticaCond.otf') format("opentype");
+}
+@font-face {
+    font-family: "coolB";
+    src: url('assets/coolvetica/CoolveticaComp.otf') format("opentype");
+}
+
+body{
+    font-family: "cool",sans-serif;
+    margin: ;
+}
+
+input::placeholder {
+  font-family: 'coolI', sans-serif; 
+  font-size: 14px; 
+}
+
+input {
+  font-family: 'cool', sans-serif; 
+}
+
+input {
+    width: 100%;
+    max-width: 300px;
+    padding: 5px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Hover effect */
+input:hover {
+    border-color: #888;
+}
+
+/* Focus effect */
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
