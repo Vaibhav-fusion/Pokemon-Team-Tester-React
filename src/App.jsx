@@ -40,12 +40,16 @@ function App() {
   };
 
  
-  return (
+  return (<>
     <div className='main-container'>
       
       <div className='heading-top'>
       <h1 >Pokemon Team Tester</h1>
       <img src='../src/assets/1.png' style={{height:"50px"}} />
+      </div>
+
+      <div className='second_text'>
+        <h2>Type in your Pokemon name/id no. or generate randomly to get a team!</h2>
       </div>
 
       <div className='input-container'>
@@ -74,8 +78,14 @@ function App() {
       </div>
 
      <PokeCards pokemonData={pokemonData}  showShiny={showShiny} />
+
+
+
+    <div className='footerr'>Disclaimer !@ This website purly a type simulator that doesn't account any abilites that effect type match up!</div>
     </div>
-  );
+    
+    </>
+  )
 }
 
 export default App;

@@ -105,10 +105,26 @@ function TypeEffectivnessCard(typeArray){
     let final_effectiven_obj=TypeCalculator(typeArray[0],typeArray[1])
 
     return <>
-    {Object.entries(final_effectiven_obj).map((ele)=>(
-        <p>{ele[1].length==0?"":ele[0]+" "+ ele[1].join(" ") }</p>
+    {Object.entries(final_effectiven_obj).map(([category, types]) => (
+      <p key={category}>
+        {types.length === 0 ? "" : 
+          // MODIFIED: Added category-specific coloring
+          <>
+            <span className={
+              category.includes("Weak") ? "type-weakness" :
+              category.includes("Resist") ? "type-resistance" :
+              category.includes("Immune") ? "type-immunity" :
+              category.includes("4X") ? "type-4xweak" :
+              "type-025resist"
+            }>
+              {category}
+            </span>
+            {" " + types.join(" ")}
+          </>
+        }
+      </p>
     ))}
-    </>
+  </>
 }
 //
 
@@ -188,32 +204,76 @@ function AllTypesCount(typeStorArr){
   }
   
   return <>
-    {
-      Object.entries(typeCount).map((ele,index)=>(
-        <div >
-          <h2>{ele[0]}</h2>
-          <p>{ele[1]}</p>
+    <div className='heading-count'> 
+  <h1>Type Weakness Count!</h1> 
+  <p>
+    (<span className="positive-count">+ve</span> → Weak Count) and 
+    (<span className="negative-count">-ve</span> → Resist Count )
+  </p>
+</div>
 
-        </div>
-      ))
-    }
-    <div>
-    {
-      weakTO.length==0?<></>:<p>{"You Team has weakness to "+weakTO.join(",")}</p>
-    }
-    {
-      ressistTO.length==0?<></>:<p>{"You Team is very resistive againts "+ressistTO.join(",")}</p>
-    }
-    {
-      Object.keys(immunities).length==0?<></>:<p>{"You Team has immunities to "+capCUT(immunities)}</p>
-    }
-    {
-      Object.keys(fourXtimeweak).length==0?<></>:<p>{"You team is 4X weak to "+capCUT(fourXtimeweak)}</p>
-    }
-    {
-      Perfect_team==true?<p>{"Damn you have got some nice team ! 🤩"}</p> :<></>
-    }
-    </div>
+    <div className='all-type-container'>{
+    Object.entries(typeCount).map(([typeName, count]) => (
+      <div key={typeName}>
+        <h2 className={`type-badge type-${typeName.toLowerCase()}`}>{typeName}</h2>
+        <p>{count}</p>
+      </div>
+    ))
+  }</div>
+
+    <div className='heading-count'> <h1>$Team Summary!</h1> </div>
+    
+    <div className='summary-box'>
+  {
+    weakTO.length === 0 ? <></> : 
+    <p>{"Your team has weakness to "}
+      {weakTO.map((type, index) => (
+        // Added span with type-badge class for each weak type
+        <span key={type} className={`type-badge type-${type.toLowerCase()}`}>
+          {type}{index < weakTO.length - 1 ? ', ' : ''}
+        </span>
+      ))}
+    </p>
+  }
+  {
+    ressistTO.length === 0 ? <></> : 
+    <p>{"Your team is very resistive against "}
+      {ressistTO.map((type, index) => (
+        // Same for resistant types
+        <span key={type} className={`type-badge type-${type.toLowerCase()}`}>
+          {type}{index < ressistTO.length - 1 ? ', ' : ''}
+        </span>
+      ))}
+    </p>
+  }
+  {
+    Object.keys(immunities).length === 0 ? <></> : 
+    <p>{"Your team has immunities to "}
+      {Object.entries(immunities).map(([type, count], index, array) => (
+        // For immunities, we use the count from your capCUT function
+        <span key={type} className={`type-badge type-${type.toLowerCase()}`}>
+          {type} x{count}{index < array.length - 1 ? ', ' : ''}
+        </span>
+      ))}
+    </p>
+  }
+  {
+    Object.keys(fourXtimeweak).length === 0 ? <></> : 
+    <p>{"Your team is 4X weak to "}
+      {Object.entries(fourXtimeweak).map(([type, count], index, array) => (
+        // For 4x weaknesses
+        <span key={type} className={`type-badge type-${type.toLowerCase()}`}>
+          {type} x{count}{index < array.length - 1 ? ', ' : ''}
+        </span>
+      ))}
+    </p>
+  }
+  {
+    Perfect_team === true ? 
+    <p className="perfect-team" style={{color:"black"}}>{"Damn you have build a nice Team of Pokemon! 🤩"}</p> : 
+    <></>
+  }
+</div>
     
   </>
 }
@@ -250,8 +310,10 @@ function PokeCards({ pokemonData , showShiny  }) {
 
   return (
     <div>
+
+      <div className='all-card-contaier'></div>
       {pokemonData.map((poke) => (
-        <div key={poke.id}>
+        <div key={poke.id} className='each-card'>
             
             <img 
             src={showShiny ? poke.sprites.front_shiny : poke.sprites.front_default} 
@@ -259,15 +321,28 @@ function PokeCards({ pokemonData , showShiny  }) {
           />
 
           <p>{capitalizeFirstLetter(poke.name)}</p>
-          <p>Type: {poke.types.map(typeInfo => capitalizeFirstLetter( typeInfo.type.name)).join(', ')}</p>
+          
+          <p>Type: 
+  {poke.types.map(typeInfo => (
+    <span 
+      className={`type-badge type-${typeInfo.type.name}`}
+      key={typeInfo.type.name}
+    >
+      {capitalizeFirstLetter(typeInfo.type.name)}
+    </span>
+  ))}
+</p>
 
           {TypeEffectivnessCard(poke.types.map(typeInfo => typeInfo.type.name))}
         </div>
       ))}
 
+
+
       <div>
         {AllTypesCount(typeStorage)}
       </div>
+
     </div>
   );
 }
